@@ -113,4 +113,4 @@ def k_equal(a_list, k):
 
 
 alist = [(1, 2), (1, 3), (5, 3), (5, 2)]
-k_equal(alist, 5)
+k_equal(alist, 4)

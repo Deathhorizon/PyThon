@@ -1,10 +1,34 @@
 #!/usr/bin/env python 
 # -*- coding:utf-8 -*-
 import cv2
+import os
 import numpy as np
 import matplotlib.pyplot as plt
-"""
 
+img=cv2.imread('test2.png')
+gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+ret, binary = cv2.threshold(gray, 127, 255, cv2.THRESH_BINARY)
+
+contours, hierarchy = cv2.findContours(binary, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+x, y, w, h = cv2.boundingRect(contours[1])
+#for i in range(0,int(len((contours)))):
+    #print(len(contours[i]))
+#cv2.polylines(img,contours[2],True,(0,255,255))
+cv2.rectangle(img, (x,y), (x+w,y+h), (153,153,0),1)
+newimage = img[y + 0:y + h - 0, x + 0:x + w-0]  # 先用y确定高，再用x确定宽
+cv2.imwrite( "12.jpg",newimage)
+cv2.imwrite( "13.jpg",img)
+cv2.imshow('img', img)
+cv2.waitKey(0)
+"""
+#                         卷积和尺寸   是否归一化
+#normalize=True  时等价于  均值滤波cv2.blur
+#normalize=False 时 卷积结果>255时，置为255
+blur=cv2.boxFilter(img,-100, (3, 3), normalize=False)
+
+cv2.imshow('boxFilter',blur)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
 
 img = cv2.imread('ball.png')
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -103,7 +127,7 @@ plt.legend(('No mask', 'Masked if > 0.5', 'Masked if < -0.5'), loc='upper right'
 plt.title('Masked line demo')
 plt.show()
 help(plt.plot)"""
-
+"""
 cap = cv2.VideoCapture(0)
 while (True):
     ret, frame = cap.read()
@@ -112,6 +136,7 @@ while (True):
     if cv2.waitKey(1) & 0xFF == ord('q'):break
 cap.release()
 cv2.destroyAllWindows()
+"""
 '''录制视频并保存
 cap = cv2.VideoCapture(0)
 fourcc = cv2.VideoWriter_fourcc(*'XVID')
